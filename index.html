@@ -71,7 +71,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .player-header.khmer { background: var(--blue); }
 .player-header.kids { background: var(--green); }
 .player-header.comedy { background: var(--purple); }
-.player-back { background: rgba(255,255,255,0.2); border: none; color: white; border-radius: 20px; padding: 10px 18px; font-size: 15px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+.player-back { background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.6); color: white; border-radius: 20px; padding: 10px 18px; font-size: 15px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
 .player-title { font-family: 'Fredoka One', cursive; font-size: 17px; color: white; line-height: 1.2; }
 .player-artist { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
 .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
@@ -423,6 +423,19 @@ function highlightLine(type, n, total) {
 }
 
 function showMain(tab) {
+  // Stop all playing audio when switching tabs
+  ['khmer','kids'].forEach(function(type) {
+    if (state[type].playing) {
+      clearInterval(state[type].timer);
+      state[type].playing = false;
+      var btn = document.getElementById(type + '-btn');
+      if (btn) { btn.textContent = '▶ Sing Along!'; btn.classList.remove('playing'); }
+    }
+  });
+  if (kidsPlayer) kidsPlayer.pauseVideo();
+  var khmerIframe = document.getElementById('khmer-iframe');
+  if (khmerIframe) khmerIframe.src = khmerIframe.src;
+
   var tabs = ['khmer','kids','comedy','about'];
   tabs.forEach(function(t) {
     document.getElementById('panel-' + t).classList.toggle('visible', t === tab);
