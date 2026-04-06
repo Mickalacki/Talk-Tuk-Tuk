@@ -89,7 +89,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .btn-sing:active { transform: scale(0.97); }
 .btn-sing.playing { background: var(--red) !important; }
 .btn-reset { background: #f0f0f0; color: var(--dark); border: none; border-radius: 30px; padding: 13px 18px; font-size: 16px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.lyrics-section { padding: 14px 18px 20px; }
+.lyrics-section { padding: 14px 18px 20px; max-height: 320px; overflow-y: auto; scroll-behavior: smooth; }
 .lyrics-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; }
 .lyric-line { padding: 10px 14px; border-radius: 10px; margin-bottom: 6px; transition: background 0.3s, transform 0.2s; }
 .lyric-line .english { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.4; }
@@ -410,7 +410,13 @@ function highlightLine(type, n, total) {
   }
   if (n >= 0) {
     var active = document.getElementById(type + '-line-' + n);
-    if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (active) {
+      var container = active.parentElement;
+      var lineTop = active.offsetTop;
+      var lineHeight = active.offsetHeight;
+      var containerHeight = container.offsetHeight;
+      container.scrollTop = lineTop - (containerHeight / 2) + (lineHeight / 2);
+    }
   }
   var pct = n < 0 ? 0 : Math.round(((n + 1) / total) * 100);
   document.getElementById(type + '-progress').style.width = pct + '%';
@@ -490,6 +496,8 @@ function closePlayer(type) {
   document.getElementById(type + '-btn').classList.remove('playing');
   document.getElementById(type + '-progress').style.width = '0%';
   renderLyrics(type, idx);
+  var lyricsContainer = document.getElementById(type + '-lyrics');
+  if (lyricsContainer) lyricsContainer.scrollTop = 0;
 }
 
 function renderLyrics(type, idx) {
