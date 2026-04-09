@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Talk Tuk Tuk">
-<title>Talk Tuk Tuk — Learn Khmer Through Song</title>
+<title>Talk Tuk Tuk — Learn Khmer · Talk, Sing &amp; Listen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -160,7 +160,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
     <div class="mic-icon">🎤</div>
     <div>
       <div class="header-title">TALK TUK TUK</div>
-      <div class="header-sub">Learn Khmer Through Song</div>
+      <div class="header-sub">Learn Khmer · Talk, Sing &amp; Listen</div>
     </div>
   </div>
 
@@ -575,7 +575,7 @@ function showMain(tab) {
   });
   if (kidsPlayer) kidsPlayer.pauseVideo();
 
-  var tabs = ['kids','basic','comedy','about'];
+  var tabs = ['kids','basics','comedy','about'];
   tabs.forEach(function(t) {
     var panel = document.getElementById('panel-' + t);
     if (panel) panel.classList.toggle('visible', t === tab);
