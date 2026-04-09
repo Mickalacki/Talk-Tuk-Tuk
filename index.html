@@ -245,26 +245,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-arrow">▶</div>
         </div>
       </div>
-      <div class="song-item" onclick="openPlayer('kids', 2)">
-        <div class="song-item-header">
-          <div class="song-badge badge-kids">3</div>
-          <div>
-            <div class="song-info-title">Numbers 1 to 10</div>
-            <div class="song-info-sub">ចំនួន · Beginner</div>
-          </div>
-          <div class="song-arrow">▶</div>
-        </div>
-      </div>
-      <div class="song-item" onclick="openPlayer('kids', 3)">
-        <div class="song-item-header">
-          <div class="song-badge badge-kids">4</div>
-          <div>
-            <div class="song-info-title">Colours in Khmer</div>
-            <div class="song-info-sub">ពណ៌ · Beginner</div>
-          </div>
-          <div class="song-arrow">▶</div>
-        </div>
-      </div>
+
 
     </div>
     <div class="player-wrap" id="kids-player">
@@ -294,6 +275,51 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
       <div class="big">🔤</div>
       <h2>Khmer Basic Coming Soon!</h2>
       <p>Numbers, letters, colours, greetings and everyday words — all taught through songs and fun activities. Perfect for absolute beginners starting their Khmer journey.</p>
+    </div>
+  </div>
+
+  <!-- KHMER BASICS -->
+  <div class="panel" id="panel-basics">
+    <div class="song-list" id="basics-list">
+      <div class="song-item" onclick="openPlayer('basics', 0)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">1</div>
+          <div>
+            <div class="song-info-title">Numbers 1 to 10</div>
+            <div class="song-info-sub">ចំនួន · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+      <div class="song-item" onclick="openPlayer('basics', 1)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">2</div>
+          <div>
+            <div class="song-info-title">Colours in Khmer</div>
+            <div class="song-info-sub">ពណ៌ · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+    </div>
+    <div class="player-wrap" id="basics-player">
+      <div class="player-header kids">
+        <button class="player-back" onclick="goToList('basics')">← Songs</button>
+        <button class="player-back" onclick="closePlayer('basics')" style="margin-left:6px;">↺ Restart</button>
+        <div>
+          <div class="player-title" id="basics-player-title"></div>
+          <div class="player-artist" id="basics-player-artist"></div>
+        </div>
+      </div>
+      <div class="video-wrap"><iframe id="basics-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="progress-bar-wrap"><div class="progress-bar pb-kids" id="basics-progress"></div></div>
+      <div class="controls">
+        <button class="btn-sing kids" id="basics-btn" onclick="toggleSing('basics')">▶ Sing Along!</button>
+      </div>
+      <div class="lyrics-section">
+        <div class="lyrics-label">Words &amp; Meaning</div>
+        <div id="basics-lyrics"></div>
+      </div>
     </div>
   </div>
 
@@ -441,11 +467,50 @@ var songs = {
       ]
     },
   ]
+,
+  basics: [
+    {
+      title: "Numbers 1 to 10",
+      artist: "ចំនួន ១ ដល់ ១០ · Khmer Numbers",
+      ytid: "V-rHNp3Z154",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "១ — មួយ", english: "One", meaning: "muoy = One", t: 0 },
+        { khmer: "២ — ពីរ", english: "Two", meaning: "pii = Two", t: 5 },
+        { khmer: "៣ — បី", english: "Three", meaning: "bei = Three", t: 10 },
+        { khmer: "៤ — បួន", english: "Four", meaning: "buon = Four", t: 15 },
+        { khmer: "៥ — ប្រាំ", english: "Five", meaning: "pram = Five", t: 20 },
+        { khmer: "៦ — ប្រាំមួយ", english: "Six", meaning: "pram muoy = Six", t: 26 },
+        { khmer: "៧ — ប្រាំពីរ", english: "Seven", meaning: "pram pii = Seven", t: 31 },
+        { khmer: "៨ — ប្រាំបី", english: "Eight", meaning: "pram bei = Eight", t: 36 },
+        { khmer: "៩ — ប្រាំបួន", english: "Nine", meaning: "pram buon = Nine", t: 41 },
+        { khmer: "១០ — ដប់", english: "Ten", meaning: "dop = Ten", t: 47 }
+      ]
+    },
+    {
+      title: "Colours in Khmer",
+      artist: "ពណ៌ · Khmer Colours",
+      ytid: "wsul4reg3Uc",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "ពោរលឿង", english: "Yellow", meaning: "por leung = Yellow", t: 0 },
+        { khmer: "ពោរទឹកក្រូច", english: "Orange", meaning: "por tuk krouch = Orange", t: 7 },
+        { khmer: "ពោរក្រហម", english: "Red", meaning: "por krah-hahm = Red", t: 15 },
+        { khmer: "ផ្កាឈូក", english: "Pink", meaning: "phka chhuk = Pink", t: 22 },
+        { khmer: "ពោរបៃតង", english: "Green", meaning: "por bai-tong = Green", t: 30 },
+        { khmer: "ពោរប្រាក់", english: "Silver", meaning: "por brak = Silver", t: 37 },
+        { khmer: "ពោរស", english: "White", meaning: "por so = White", t: 44 },
+        { khmer: "ពោរត្នោត", english: "Brown", meaning: "por tnaot = Brown", t: 52 },
+        { khmer: "ពោរខ្មៅ", english: "Black", meaning: "por khmao = Black", t: 59 }
+      ]
+    }
+  ]
 };
 
 var state = {
-  khmer: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
-  kids:  { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 }
+  khmer:  { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
+  kids:   { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
+  basics: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 }
 };
 var INTERVAL = 4200;
 
