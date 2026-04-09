@@ -181,14 +181,14 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
   </div>
 
   <div class="main-nav">
-    <button class="main-tab t-khmer active" id="mtab-khmer" onclick="showMain('khmer')">🎵<br>Songs</button>
-    <button class="main-tab t-kids" id="mtab-kids" onclick="showMain('kids')">👶<br>Kids Songs</button>
+    <button class="main-tab t-kids active" id="mtab-kids" onclick="showMain('kids')">👶<br>Kids Songs</button>
+    <button class="main-tab t-khmer" id="mtab-basic" onclick="showMain('basic')">🔤<br>Khmer Basic</button>
     <button class="main-tab t-comedy" id="mtab-comedy" onclick="showMain('comedy')">😂<br>Comedy</button>
     <button class="main-tab t-about" id="mtab-about" onclick="showMain('about')">❤️<br>About</button>
   </div>
 
-  <!-- KHMER SONGS -->
-  <div class="panel visible" id="panel-khmer">
+  <!-- KHMER SONGS HIDDEN -->
+  <div class="panel" id="panel-khmer" style="display:none;">
     <div class="song-list" id="khmer-list">
       <div class="song-item" onclick="openPlayer('khmer', 0)">
         <div class="song-item-header">
@@ -223,7 +223,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
   </div>
 
   <!-- KIDS SONGS -->
-  <div class="panel" id="panel-kids">
+  <div class="panel visible" id="panel-kids">
     <div class="song-list" id="kids-list">
       <div class="song-item" onclick="openPlayer('kids', 0)">
         <div class="song-item-header">
@@ -249,12 +249,23 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
         <div class="song-item-header">
           <div class="song-badge badge-kids">3</div>
           <div>
-            <div class="song-info-title">If You're Happy and You Know It</div>
-            <div class="song-info-sub">ពេលសប្បាយ · Beginner</div>
+            <div class="song-info-title">Numbers 1 to 10</div>
+            <div class="song-info-sub">ចំនួន · Beginner</div>
           </div>
           <div class="song-arrow">▶</div>
         </div>
       </div>
+      <div class="song-item" onclick="openPlayer('kids', 3)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">4</div>
+          <div>
+            <div class="song-info-title">Colours in Khmer</div>
+            <div class="song-info-sub">ពណ៌ · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+
     </div>
     <div class="player-wrap" id="kids-player">
       <div class="player-header kids">
@@ -274,6 +285,15 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
         <div class="lyrics-label">Lyrics &amp; Meaning</div>
         <div id="kids-lyrics"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- KHMER BASIC -->
+  <div class="panel" id="panel-basic">
+    <div class="coming-soon-card">
+      <div class="big">🔤</div>
+      <h2>Khmer Basic Coming Soon!</h2>
+      <p>Numbers, letters, colours, greetings and everyday words — all taught through songs and fun activities. Perfect for absolute beginners starting their Khmer journey.</p>
     </div>
   </div>
 
@@ -364,7 +384,7 @@ var songs = {
     {
       title: "My Grandpa's Farm",
       artist: "Khmer Version of Old MacDonald",
-      ytid: "ByvgzgmXNAk",
+      ytid: "k_JHqAfqoSs",
       ytstart: 0,
       lyrics: [
         { khmer: "ជីតាខ្ញុំ មានផ្ទះនៅស្រែ", english: "My grandpa has a house by the rice field", meaning: "ជីតា = Chida · Grandpa", t: 0 },
@@ -386,20 +406,40 @@ var songs = {
       ]
     },
     {
-      title: "If You're Happy and You Know It",
-      artist: "ពេលសប្បាយ · Khmer Version",
-      ytid: "rWgcFID7XOA",
+      title: "Numbers 1 to 10",
+      artist: "ចំនួន ១ ដល់ ១០ · Khmer Numbers",
+      ytid: "V-rHNp3Z154",
+      ytstart: 0,
       lyrics: [
-        { khmer: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន", english: "If you're happy and you know it", meaning: "សប្បាយ = Sabay · Happy", t: 0 },
-        { khmer: "拍ដៃ! ដៃ!", english: "Clap your hands!", meaning: "ដៃ = Dai · Hands", t: 6 },
-        { khmer: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន", english: "If you're happy and you know it", meaning: "ដឹងខ្លួន = Deng khluon · Know it", t: 12 },
-        { khmer: "ដៃ! ដៃ!", english: "Clap your hands!", meaning: "ដៃ = Dai · Hands", t: 18 },
-        { khmer: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន", english: "If you're happy and you know it", meaning: "បើ = Bae · If", t: 22 },
-        { khmer: "មុខអ្នកនឹងបង្ហាញ", english: "Then your face will surely show it", meaning: "មុខ = Mok · Face", t: 28 },
-        { khmer: "បើអ្នកសប្បាយ ហើយដឹងខ្លួន", english: "If you're happy and you know it", meaning: "អ្នក = Neak · You", t: 34 },
-        { khmer: "ដៃ! ដៃ!", english: "Clap your hands!", meaning: "ដៃ ដៃ! · Clap clap!", t: 40 }
+        { khmer: "១ — មួយ", english: "One", meaning: "muoy = One", t: 0 },
+        { khmer: "២ — ពីរ", english: "Two", meaning: "pii = Two", t: 5 },
+        { khmer: "៣ — បី", english: "Three", meaning: "bei = Three", t: 10 },
+        { khmer: "៤ — បួន", english: "Four", meaning: "buon = Four", t: 15 },
+        { khmer: "៥ — ប្រាំ", english: "Five", meaning: "pram = Five", t: 20 },
+        { khmer: "៦ — ប្រាំមួយ", english: "Six", meaning: "pram muoy = Six", t: 26 },
+        { khmer: "៧ — ប្រាំពីរ", english: "Seven", meaning: "pram pii = Seven", t: 31 },
+        { khmer: "៨ — ប្រាំបី", english: "Eight", meaning: "pram bei = Eight", t: 36 },
+        { khmer: "៩ — ប្រាំបួន", english: "Nine", meaning: "pram buon = Nine", t: 41 },
+        { khmer: "១០ — ដប់", english: "Ten", meaning: "dop = Ten", t: 47 }
       ]
-    }
+    },
+    {
+      title: "Colours in Khmer",
+      artist: "ពណ៌ · Khmer Colours",
+      ytid: "wsul4reg3Uc",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "ពោរលឿង", english: "Yellow", meaning: "por leung = Yellow", t: 0 },
+        { khmer: "ពោរទឹកក្រូច", english: "Orange", meaning: "por tuk krouch = Orange", t: 7 },
+        { khmer: "ពោរក្រហម", english: "Red", meaning: "por krah-hahm = Red", t: 15 },
+        { khmer: "ផ្កាឈូក", english: "Pink", meaning: "phka chhuk = Pink", t: 22 },
+        { khmer: "ពោរបៃតង", english: "Green", meaning: "por bai-tong = Green", t: 30 },
+        { khmer: "ពោរប្រាក់", english: "Silver", meaning: "por brak = Silver", t: 37 },
+        { khmer: "ពោរស", english: "White", meaning: "por so = White", t: 44 },
+        { khmer: "ពោរត្នោត", english: "Brown", meaning: "por tnaot = Brown", t: 52 },
+        { khmer: "ពោរខ្មៅ", english: "Black", meaning: "por khmao = Black", t: 59 }
+      ]
+    },
   ]
 };
 
@@ -467,13 +507,13 @@ function showMain(tab) {
     }
   });
   if (kidsPlayer) kidsPlayer.pauseVideo();
-  var khmerIframe = document.getElementById('khmer-iframe');
-  if (khmerIframe) khmerIframe.src = khmerIframe.src;
 
-  var tabs = ['khmer','kids','comedy','about'];
+  var tabs = ['kids','basic','comedy','about'];
   tabs.forEach(function(t) {
-    document.getElementById('panel-' + t).classList.toggle('visible', t === tab);
-    document.getElementById('mtab-' + t).classList.toggle('active', t === tab);
+    var panel = document.getElementById('panel-' + t);
+    if (panel) panel.classList.toggle('visible', t === tab);
+    var btn = document.getElementById('mtab-' + t);
+    if (btn) btn.classList.toggle('active', t === tab);
   });
 }
 
