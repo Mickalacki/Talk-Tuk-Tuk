@@ -759,19 +759,17 @@ function toggleSingKids() {
   var btn = document.getElementById(type + '-btn');
   var s = state[type];
   if (!s.playing) {
+    s.playing = true;
     btn.textContent = '⏸ Pause';
     btn.classList.add('playing');
     if (kidsPlayer) kidsPlayer.playVideo();
-    startCountdown(type, function() {
-      s.playing = true;
-      s.startTime = Date.now();
-      if (hasTimestamps(type, s.songIndex)) {
-        s.timer = setInterval(function() { tickTimestamp(type); }, 250);
-      } else {
-        advanceLine(type);
-        s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
-      }
-    });
+    // Poll actual video time - no countdown needed
+    if (hasTimestamps(type, s.songIndex)) {
+      s.timer = setInterval(function() { tickTimestamp(type); }, 250);
+    } else {
+      advanceLine(type);
+      s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
+    }
   } else {
     s.playing = false;
     btn.textContent = '▶ Sing Along!';
