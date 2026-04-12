@@ -705,16 +705,19 @@ function highlightLine(type, n, total) {
 }
 
 function showMain(tab) {
-  // Stop all playing audio when switching tabs
-  ['khmer','kids'].forEach(function(type) {
-    if (state[type].playing) {
+  // Stop ALL playing audio when switching tabs
+  var textMap = { kids: '▶ Sing Along!', basics: '▶ Listen & Learn!', comedy: '▶ Watch & Learn!', khmer: '▶ Sing Along!' };
+  ['khmer','kids','basics','comedy'].forEach(function(type) {
+    if (state[type] && state[type].playing) {
       clearInterval(state[type].timer);
       state[type].playing = false;
       var btn = document.getElementById(type + '-btn');
-      if (btn) { btn.textContent = '▶ Sing Along!'; btn.classList.remove('playing'); }
+      if (btn) { btn.textContent = textMap[type] || '▶ Play'; btn.classList.remove('playing'); }
     }
   });
   if (kidsPlayer) kidsPlayer.pauseVideo();
+  if (basicsPlayer) basicsPlayer.pauseVideo();
+  if (comedyPlayer) comedyPlayer.pauseVideo();
 
   var tabs = ['kids','basics','comedy','about'];
   tabs.forEach(function(t) {
