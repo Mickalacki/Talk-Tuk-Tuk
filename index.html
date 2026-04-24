@@ -184,7 +184,6 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
   <div class="main-nav">
     <button class="main-tab t-kids active" id="mtab-kids" onclick="showMain('kids')">👶<br>Kids Songs</button>
     <button class="main-tab t-khmer" id="mtab-basics" onclick="showMain('basics')">🔤<br>Khmer Basic</button>
-    <button class="main-tab t-comedy" id="mtab-comedy" onclick="showMain('comedy')">😂<br>Comedy</button>
     <button class="main-tab t-about" id="mtab-about" onclick="showMain('about')">❤️<br>About</button>
   </div>
 
@@ -315,6 +314,26 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
           <div class="song-arrow">▶</div>
         </div>
       </div>
+      <div class="song-item" onclick="openPlayer('basics', 4)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">5</div>
+          <div>
+            <div class="song-info-title">Khmer Essentials</div>
+            <div class="song-info-sub">ភាសាខ្មែរ · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
+      <div class="song-item" onclick="openPlayer('basics', 5)">
+        <div class="song-item-header">
+          <div class="song-badge badge-kids">6</div>
+          <div>
+            <div class="song-info-title">Food &amp; Drink</div>
+            <div class="song-info-sub">ម្ហូប និងភេសជ្ជៈ · Beginner</div>
+          </div>
+          <div class="song-arrow">▶</div>
+        </div>
+      </div>
     </div>
     <div class="player-wrap" id="basics-player">
       <div class="player-header kids">
@@ -334,51 +353,6 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
       <div class="lyrics-section">
         <div class="lyrics-label">Words &amp; Pronunciation</div>
         <div id="basics-lyrics"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- COMEDY -->
-  <div class="panel" id="panel-comedy">
-    <div class="song-list" id="comedy-list">
-      <div class="song-item" onclick="openPlayer('comedy', 0)">
-        <div class="song-item-header">
-          <div class="song-badge badge-comedy">1</div>
-          <div>
-            <div class="song-info-title">Chas Steav — ចាស់ស្ទាវ</div>
-            <div class="song-info-sub">CTN Comedy · Family Sketch</div>
-          </div>
-          <div class="song-arrow">▶</div>
-        </div>
-      </div>
-      <div class="song-item" onclick="openPlayer('comedy', 1)">
-        <div class="song-item-header">
-          <div class="song-badge badge-comedy">2</div>
-          <div>
-            <div class="song-info-title">Friends &amp; Visas — មិត្តភក្តិ</div>
-            <div class="song-info-sub">CTN Comedy · Friendship Sketch</div>
-          </div>
-          <div class="song-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-    <div class="player-wrap" id="comedy-player">
-      <div class="player-header comedy">
-        <button class="player-back" onclick="goToList('comedy')">← Clips</button>
-        <button class="player-back" onclick="closePlayer('comedy')" style="margin-left:6px;">↺ Restart</button>
-        <div>
-          <div class="player-title" id="comedy-player-title"></div>
-          <div class="player-artist" id="comedy-player-artist"></div>
-        </div>
-      </div>
-      <div class="video-wrap" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><div id="comedy-yt-player" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div></div>
-      <div class="progress-bar-wrap"><div class="progress-bar pb-comedy" id="comedy-progress"></div></div>
-      <div class="controls">
-        <button class="btn-sing comedy" id="comedy-btn" onclick="toggleSingComedy()">▶ Watch &amp; Learn!</button>
-      </div>
-      <div class="lyrics-section">
-        <div class="lyrics-label">Dialogue &amp; Translation</div>
-        <div id="comedy-lyrics"></div>
       </div>
     </div>
   </div>
@@ -535,6 +509,41 @@ var songs = {
       ]
     },
     {
+      title: "Khmer Essentials",
+      artist: "ភាសាខ្មែរ · Essential Phrases",
+      ytid: "BSvdpT_FiUo",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "សួស្តី", english: "Hello", meaning: "Soo-sday = Hello", t: 7 },
+        { khmer: "លាហើយ", english: "Goodbye", meaning: "Lea hay = Goodbye", t: 14 },
+        { khmer: "អរគុណ", english: "Thank you", meaning: "Or-koon = Thank you", t: 22 },
+        { khmer: "សុំទោស", english: "Sorry", meaning: "Som-toh = Sorry", t: 29 },
+        { khmer: "បាទ", english: "Yes", meaning: "Bart = Yes (male) / Jas (female)", t: 37 },
+        { khmer: "អត់ទេ", english: "No", meaning: "Ot tay = No", t: 44 },
+        { khmer: "ខ្ញុំមិនយល់ទេ", english: "I don't understand", meaning: "Kh-nyom min yohl tay", t: 52 },
+        { khmer: "ថ្លៃប៉ុន្មាន?", english: "How much?", meaning: "Tlay pon-man = How much?", t: 60 },
+        { khmer: "នៅឯណា?", english: "Where is it?", meaning: "Now ae na = Where is it?", t: 69 },
+        { khmer: "បត់ឆ្វេង", english: "Turn left", meaning: "Bot chh-veng = Turn left", t: 78 },
+        { khmer: "បត់ស្តាំ", english: "Turn right", meaning: "Bot sdam = Turn right", t: 85 },
+        { khmer: "ឈប់ទីនេះ", english: "Stop here", meaning: "Chhob ti nih = Stop here", t: 94 }
+      ]
+    },
+    {
+      title: "Food & Drink",
+      artist: "ម្ហូប និងភេសជ្ជៈ · Essential Phrases",
+      ytid: "F0XT8f5iw9Y",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "ខ្ញុំឃ្លាន", english: "I'm hungry", meaning: "Kh-nyom khlean = I'm hungry", t: 5 },
+        { khmer: "ខ្ញុំស្រេកទឹក", english: "I'm thirsty", meaning: "Kh-nyom srek teuk = I'm thirsty", t: 13 },
+        { khmer: "ឆ្ងាញ់ណាស់!", english: "Delicious!", meaning: "Chh-nganh nas = Delicious!", t: 20 },
+        { khmer: "សូមកុំហឹរ", english: "Not spicy please", meaning: "Som kom heh = Not spicy please", t: 28 },
+        { khmer: "ទឹក", english: "Water", meaning: "Teuk = Water", t: 36 },
+        { khmer: "ស្រាបៀរ", english: "Beer", meaning: "Sraa-beer = Beer", t: 44 },
+        { khmer: "សូមគិតលុយ", english: "The bill please", meaning: "Som kit loo-y = The bill please", t: 51 }
+      ]
+    },
+    {
       title: "Colours in Khmer",
       artist: "ពណ៌ · Khmer Colours",
       ytid: "wsul4reg3Uc",
@@ -607,6 +616,41 @@ var songs = {
       ]
     },
     {
+      title: "Khmer Essentials",
+      artist: "ភាសាខ្មែរ · Essential Phrases",
+      ytid: "BSvdpT_FiUo",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "សួស្តី", english: "Hello", meaning: "Soo-sday = Hello", t: 7 },
+        { khmer: "លាហើយ", english: "Goodbye", meaning: "Lea hay = Goodbye", t: 14 },
+        { khmer: "អរគុណ", english: "Thank you", meaning: "Or-koon = Thank you", t: 22 },
+        { khmer: "សុំទោស", english: "Sorry", meaning: "Som-toh = Sorry", t: 29 },
+        { khmer: "បាទ", english: "Yes", meaning: "Bart = Yes (male) / Jas (female)", t: 37 },
+        { khmer: "អត់ទេ", english: "No", meaning: "Ot tay = No", t: 44 },
+        { khmer: "ខ្ញុំមិនយល់ទេ", english: "I don't understand", meaning: "Kh-nyom min yohl tay", t: 52 },
+        { khmer: "ថ្លៃប៉ុន្មាន?", english: "How much?", meaning: "Tlay pon-man = How much?", t: 60 },
+        { khmer: "នៅឯណា?", english: "Where is it?", meaning: "Now ae na = Where is it?", t: 69 },
+        { khmer: "បត់ឆ្វេង", english: "Turn left", meaning: "Bot chh-veng = Turn left", t: 78 },
+        { khmer: "បត់ស្តាំ", english: "Turn right", meaning: "Bot sdam = Turn right", t: 85 },
+        { khmer: "ឈប់ទីនេះ", english: "Stop here", meaning: "Chhob ti nih = Stop here", t: 94 }
+      ]
+    },
+    {
+      title: "Food & Drink",
+      artist: "ម្ហូប និងភេសជ្ជៈ · Essential Phrases",
+      ytid: "F0XT8f5iw9Y",
+      ytstart: 0,
+      lyrics: [
+        { khmer: "ខ្ញុំឃ្លាន", english: "I'm hungry", meaning: "Kh-nyom khlean = I'm hungry", t: 5 },
+        { khmer: "ខ្ញុំស្រេកទឹក", english: "I'm thirsty", meaning: "Kh-nyom srek teuk = I'm thirsty", t: 13 },
+        { khmer: "ឆ្ងាញ់ណាស់!", english: "Delicious!", meaning: "Chh-nganh nas = Delicious!", t: 20 },
+        { khmer: "សូមកុំហឹរ", english: "Not spicy please", meaning: "Som kom heh = Not spicy please", t: 28 },
+        { khmer: "ទឹក", english: "Water", meaning: "Teuk = Water", t: 36 },
+        { khmer: "ស្រាបៀរ", english: "Beer", meaning: "Sraa-beer = Beer", t: 44 },
+        { khmer: "សូមគិតលុយ", english: "The bill please", meaning: "Som kit loo-y = The bill please", t: 51 }
+      ]
+    },
+    {
       title: "Colours in Khmer",
       artist: "ពណ៌ · Khmer Colours",
       ytid: "wsul4reg3Uc",
@@ -624,56 +668,13 @@ var songs = {
       ]
     }
   ]
-,
-  comedy: [
-    {
-      title: "Chas Steav — ចាស់ស្ទាវ",
-      artist: "CTN Comedy · Family Sketch",
-      ytid: "vWEGQA5kEUE",
-      ytstart: 0,
-      lyrics: [
-        { khmer: "មិនទាន់ទេម៉ែ ខ្ញុំអត់ចង់ជាន់ទេ", english: "Not yet, Mom. I didn't want to step on it.", meaning: "មិនទាន់ = Min tean · Not yet", t: 0 },
-        { khmer: "ហេ! ឯងដើរធ្វើអី? ខ្ញុំពិបាកចិត្តចង់ងាប់!", english: "Hey! What are you doing? I'm so stressed I could die!", meaning: "ពិបាកចិត្ត = Pibak chet · Stressed", t: 8 },
-        { khmer: "ខ្ញុំក៏ពិបាកចិត្តដែរ មើលមុខអូន ស្រកចាស់ហើយ", english: "I'm stressed too, Mom. Look — she looks worn out.", meaning: "ចាស់ = Chas · Old", t: 16 },
-        { khmer: "ពិបាកចិត្តរឿងអី?", english: "What are you stressed about?", meaning: "រឿង = Reung · About/Matter", t: 24 },
-        { khmer: "រឿងឪចាស់ហើយតែអត់ព្រមចាស់", english: "About Dad being old but not acting old!", meaning: "ឪ = Ov · Dad/Father", t: 32 },
-        { khmer: "វាមិនសមទេ ស្លៀកអីចឹងៗ", english: "It's not appropriate, dressing like that!", meaning: "ស្លៀក = Sleak · To dress/wear", t: 40 },
-        { khmer: "មើលខោផ្កានេះ គាត់យកពីណាមក?", english: "Look at these flower pants — where did he get them?", meaning: "ខោ = Khao · Pants/Trousers", t: 48 },
-        { khmer: "ចាស់ហើយតែច្នាស់ មិនគិតខ្លួនឯង!", english: "Old but stubborn, not thinking about himself!", meaning: "ច្នាស់ = Chnas · Stubborn", t: 56 },
-        { khmer: "គាត់ដើរតែជាមួយក្មេងៗ", english: "He only hangs out with young people.", meaning: "ក្មេង = Kmeng · Young person/Child", t: 64 },
-        { khmer: "សំណាងហើយម៉ែមានកូនឯង ប្តីអត់អាចពឹងបាន", english: "Lucky I have you. A husband like this can't be relied on!", meaning: "ប្តី = Bdei · Husband", t: 72 }
-      ]
-    },
-    {
-      title: "Friends & Visas — មិត្តភក្តិ",
-      artist: "CTN Comedy · Friendship Sketch",
-      ytid: "n_yYHofirnQ",
-      ytstart: 0,
-      lyrics: [
-        { khmer: "គ្រាន់តែរឿងបញ្ជីតតូច...", english: "All this… just over a small issue…", meaning: "រឿង = Reung · Issue/Matter", t: 0 },
-        { khmer: "សុខចិត្តចោលផ្ទះ ចោលអ្វីៗ ដោយសាររឿងក្មេង!", english: "Leaving the house, everything — just because of those two kids?!", meaning: "ផ្ទះ = Pteah · House", t: 12 },
-        { khmer: "ទៅចុះ! ទៅឲ្យឆ្ងាយ!", english: "Go! Get out! Go far away!", meaning: "ទៅ = Tov · Go", t: 14 },
-        { khmer: "មានសងហា?", english: "Got money or not?", meaning: "លុយ = Luy · Money", t: 15 },
-        { khmer: "ហែងគិតមើល! ហែងគិតមើល!", english: "Think about it! Just think about it!", meaning: "គិត = Kit · Think", t: 15 },
-        { khmer: "អញជាមេតូច ហែងមេធំ ហែងវាយបាន", english: "I'm the small boss, you're the big boss — do what you want.", meaning: "មេធំ = Me Thom · Big boss", t: 15 },
-        { khmer: "ចាញ់មួយគ្របនេះ មិនធម្មតា!", english: "Losing like this is not normal!", meaning: "ចាញ់ = Chanh · To lose", t: 42 },
-        { khmer: "ខ្មាស់គេណាស់! គេឈរមើល!", english: "So embarrassing! Everyone's watching!", meaning: "ខ្មាស់ = Khmah · Embarrassed", t: 42 },
-        { khmer: "មានដែរ ប៉ុន្តែអត់ប្រើការ 😄", english: "I have a brain… just not using it!", meaning: "ប្រើការ = Prer kar · Use it", t: 42 },
-        { khmer: "ភីសាទៅអាមេរិក!", english: "Visa to America! 🇺🇸", meaning: "ភីសា = Visa · Travel visa", t: 43 },
-        { khmer: "ភីសា? ភីសា? ភីសា?!", english: "Visa?! You bringing food?! (joking confusion!)", meaning: "ស៊ី = Si · To eat — sounds like visa!", t: 46 },
-        { khmer: "អត់មានបញ្ហា អត់មានក្បត់គ្នា", english: "No problems, no betrayal — friends forever.", meaning: "មិត្ត = Mit · Friend", t: 46 },
-        { khmer: "បើអ្នកណារកស៊ីបាន យើងជួយគ្នា", english: "Whoever makes money — we help each other.", meaning: "ជួយ = Chuoy · Help", t: 46 },
-        { khmer: "លិចលឺថាវាមានគ្នាពីរនាក់ទៀត...", english: "I heard… there are actually two more people involved…", meaning: "លឺ = Leu · Hear/rumour", t: 95 }
-      ]
-    }
-  ]
+
 };
 
 var state = {
   khmer:  { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
   kids:   { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
-  basics: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 },
-  comedy: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 }
+  basics: { current: -1, playing: false, timer: null, songIndex: 0, startTime: 0 }
 };
 var INTERVAL = 4200;
 
@@ -690,8 +691,6 @@ function tickTimestamp(type) {
     elapsed = kidsPlayer.getCurrentTime();
   } else if (type === 'basics' && basicsPlayer && basicsPlayer.getCurrentTime) {
     elapsed = basicsPlayer.getCurrentTime();
-  } else if (type === 'comedy' && comedyPlayer && comedyPlayer.getCurrentTime && comedyPlayer.getPlayerState && comedyPlayer.getPlayerState() > 0) {
-    elapsed = comedyPlayer.getCurrentTime();
   } else {
     elapsed = (Date.now() - s.startTime) / 1000;
   }
@@ -738,8 +737,8 @@ function highlightLine(type, n, total) {
 
 function showMain(tab) {
   // Stop ALL playing audio when switching tabs
-  var textMap = { kids: '▶ Sing Along!', basics: '▶ Listen & Learn!', comedy: '▶ Watch & Learn!', khmer: '▶ Sing Along!' };
-  ['khmer','kids','basics','comedy'].forEach(function(type) {
+  var textMap = { kids: '▶ Sing Along!', basics: '▶ Listen & Learn!', khmer: '▶ Sing Along!' };
+  ['khmer','kids','basics'].forEach(function(type) {
     if (state[type] && state[type].playing) {
       clearInterval(state[type].timer);
       state[type].playing = false;
@@ -749,7 +748,6 @@ function showMain(tab) {
   });
   if (kidsPlayer) kidsPlayer.pauseVideo();
   if (basicsPlayer) basicsPlayer.pauseVideo();
-  if (comedyPlayer) comedyPlayer.pauseVideo();
 
   var tabs = ['kids','basics','comedy','about'];
   tabs.forEach(function(t) {
@@ -789,8 +787,6 @@ function openPlayer(type, idx) {
     } else {
       pendingBasicsVideo = { videoId: s.ytid, startSeconds: s.ytstart || 0 };
     }
-  } else if (type === 'comedy') {
-    initComedyPlayer(s.ytid, s.ytstart || 0);
   } else {
     document.getElementById(type + '-iframe').src = 'https://www.youtube.com/embed/' + s.ytid + '?rel=0&playsinline=1' + start;
   }
@@ -808,7 +804,6 @@ function goToList(type) {
   state[type].startTime = 0;
   if (type === 'kids' && kidsPlayer) kidsPlayer.stopVideo();
   else if (type === 'basics' && basicsPlayer) basicsPlayer.stopVideo();
-  else if (type === 'comedy' && comedyPlayer) comedyPlayer.stopVideo();
   else { var iframe = document.getElementById(type + '-iframe'); if(iframe) iframe.src = ''; }
   var btnText = type === 'basics' ? '▶ Listen & Learn!' : (type === 'comedy' ? '▶ Watch & Learn!' : '▶ Sing Along!');
   document.getElementById(type + '-btn').textContent = btnText;
@@ -832,11 +827,6 @@ function closePlayer(type) {
     if (basicsPlayer) {
       basicsPlayer.seekTo(songs.basics[idx].ytstart || 0, true);
       basicsPlayer.pauseVideo();
-    }
-  } else if (type === 'comedy') {
-    if (comedyPlayer) {
-      comedyPlayer.seekTo(songs.comedy[idx].ytstart || 0, true);
-      comedyPlayer.pauseVideo();
     }
   } else {
     var s = songs[type][idx];
@@ -991,32 +981,6 @@ function startCountdown(type, callback) {
   }, 1000);
 }
 
-function toggleSingComedy() {
-  var type = 'comedy';
-  var btn = document.getElementById(type + '-btn');
-  var s = state[type];
-  if (!s.playing) {
-    s.playing = true;
-    btn.textContent = '⏸ Pause';
-    btn.classList.add('playing');
-    if (comedyPlayer && comedyPlayer.playVideo) {
-      comedyPlayer.playVideo();
-    }
-    s.startTime = Date.now();
-    if (hasTimestamps(type, s.songIndex)) {
-      s.timer = setInterval(function() { tickTimestamp(type); }, 250);
-    } else {
-      advanceLine(type);
-      s.timer = setInterval(function() { advanceLine(type); }, INTERVAL);
-    }
-  } else {
-    s.playing = false;
-    btn.textContent = '▶ Watch & Learn!';
-    btn.classList.remove('playing');
-    clearInterval(s.timer);
-    if (comedyPlayer && comedyPlayer.pauseVideo) comedyPlayer.pauseVideo();
-  }
-}
 
 // Language mode
 window.learningLang = 'khmer'; // default
@@ -1046,8 +1010,6 @@ function setLang(lang) {
 var kidsPlayer = null;
 var basicsPlayer = null;
 var pendingBasicsVideo = null;
-var comedyPlayer = null;
-var pendingComedyVideo = null;
 var pendingKidsVideo = null;
 
 function onYouTubeIframeAPIReady() {
@@ -1084,24 +1046,6 @@ function onYouTubeIframeAPIReady() {
   // Comedy player initialised lazily when tab is first opened
 }
 
-function initComedyPlayer(videoId, startSeconds) {
-  if (comedyPlayer) {
-    comedyPlayer.loadVideoById({ videoId: videoId, startSeconds: startSeconds || 0 });
-    comedyPlayer.pauseVideo();
-    return;
-  }
-  comedyPlayer = new YT.Player('comedy-yt-player', {
-    height: '100%',
-    width: '100%',
-    videoId: videoId,
-    playerVars: { rel: 0, playsinline: 1, modestbranding: 1 },
-    events: {
-      onReady: function() {
-        comedyPlayer.pauseVideo();
-      }
-    }
-  });
-}
 </script>
 </body>
 </html>
