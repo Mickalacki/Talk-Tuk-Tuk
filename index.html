@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Talk Tuk Tuk">
-<title>Talk Tuk Tuk — Learn Khmer · Talk, Sing &amp; Listen</title>
+<title>Talk Tuk Tuk — Learn Basic Khmer Quickly!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -163,7 +163,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
     <img src="https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/NEW_TTT_LOGO.png" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="Talk Tuk Tuk">
     <div>
       <div class="header-title">TALK TUK TUK</div>
-      <div class="header-sub">Learn Khmer · Talk, Sing &amp; Listen</div>
+      <div class="header-sub">Learn Basic Khmer Quickly!</div>
     </div>
   </div>
 
@@ -184,8 +184,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
   </div>
 
   <div class="main-nav">
-    <button class="main-tab t-kids active" id="mtab-kids" onclick="showMain('kids')">👶<br>Kids Songs</button>
-    <button class="main-tab t-khmer" id="mtab-phrases" onclick="showMain('phrases')">🗣️<br>Phrases</button>
+    <button class="main-tab t-khmer active" id="mtab-phrases" onclick="showMain('phrases')">🗣️<br>Phrases</button>
     <button class="main-tab t-about" id="mtab-about" onclick="showMain('about')">❤️<br>About</button>
   </div>
 
@@ -225,7 +224,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
   </div>
 
   <!-- KIDS SONGS -->
-  <div class="panel visible" id="panel-kids">
+  <div class="panel" id="panel-kids">
     <div class="song-list" id="kids-list">
       <div class="song-item" onclick="openPlayer('kids', 0)">
         <div class="song-item-header">
@@ -274,7 +273,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 
 
   <!-- PHRASES -->
-  <div class="panel" id="panel-phrases">
+  <div class="panel visible" id="panel-phrases">
 
     <!-- CATEGORY LIST -->
     <div id="phrases-categories">
@@ -345,6 +344,16 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
             <div>
               <div class="song-info-title">Colours</div>
               <div class="song-info-sub">8 phrases · Red, Blue, Green...</div>
+            </div>
+            <div class="song-arrow">▶</div>
+          </div>
+        </div>
+        <div class="song-item" onclick="openKidsSongs()">
+          <div class="song-item-header">
+            <div class="song-badge badge-kids" style="background:#4CAF50;font-size:22px;width:44px;height:44px;">👶</div>
+            <div>
+              <div class="song-info-title">Kids Songs</div>
+              <div class="song-info-sub">2 songs · Sing along in Khmer</div>
             </div>
             <div class="song-arrow">▶</div>
           </div>
