@@ -154,8 +154,8 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .quiz-opt.reveal { background: #E8F5E9; border-color: #4CAF50; color: #2E7D32; }
 .quiz-opt.disabled { cursor: default; }
 .quiz-score-card { margin: 14px 12px 0; background: white; border-radius: 16px; padding: 30px 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.35); text-align: center; }
-.quiz-score-big { font-family: "Fredoka One", cursive; font-size: 64px; color: var(--blue); line-height: 1; }
-.quiz-score-label { font-size: 14px; color: var(--muted); margin-top: 6px; margin-bottom: 20px; }
+.quiz-score-big { font-family: "Fredoka One", cursive; font-size: 56px; color: var(--blue); line-height: 1; }
+.quiz-score-label { font-size: 15px; font-weight: 700; color: var(--dark); margin-top: 10px; margin-bottom: 20px; line-height: 1.4; }
 .quiz-start-card { margin: 14px 12px 0; background: white; border-radius: 16px; padding: 28px 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.35); text-align: center; }
 .quiz-cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
 .quiz-cat-btn { background: #f5f5f5; border: 2px solid #eee; border-radius: 12px; padding: 14px 10px; font-size: 13px; font-weight: 700; color: var(--dark); cursor: pointer; transition: all 0.15s; }
@@ -1441,8 +1441,20 @@ function showScore() {
   var total = quizQuestions.length;
   var pct = Math.round((quizScore / total) * 100);
   document.getElementById('quiz-score-num').textContent = quizScore + ' / ' + total;
-  var emoji = pct === 100 ? '🏆' : pct >= 70 ? '🎉' : pct >= 40 ? '👍' : '💪';
-  var label = pct === 100 ? 'Perfect score! Amazing!' : pct >= 70 ? 'Great work! Keep it up!' : pct >= 40 ? 'Good effort! Keep practising!' : 'Keep going — you will get there!';
+  var emoji, label;
+  if (pct === 100) {
+    emoji = '🛺👑';
+    label = 'TUK TUK LEGEND! You nailed it — the locals will think you grew up here!';
+  } else if (pct >= 70) {
+    emoji = '🇰🇭😎';
+    label = 'ALMOST LOCAL! A few more rides in the tuk tuk and you will be fluent!';
+  } else if (pct >= 40) {
+    emoji = '📚🛺';
+    label = 'NEEDS MORE PRACTICE! Jump back in the tuk tuk and keep learning!';
+  } else {
+    emoji = '😅🛺';
+    label = 'NEEDS MORE PRACTICE! Even the tuk tuk driver is confused — keep going!';
+  }
   document.getElementById('quiz-score-emoji').textContent = emoji;
   document.getElementById('quiz-score-label').textContent = label;
   document.getElementById('quiz-progress-bar').style.width = '100%';
