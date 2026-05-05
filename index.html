@@ -1163,35 +1163,43 @@ function openCategory(cat) {
   currentCategory = cat;
   document.getElementById('phrases-categories').style.display = 'none';
   document.getElementById('phrase-player').style.display = 'none';
-  var list = document.getElementById('phrase-cards');
-  list.innerHTML = '';
+
+  // Fully reset phrases-list
+  var phrasesList = document.getElementById('phrases-list');
+  phrasesList.innerHTML = '';
+
+  // Add back button
+  var back = document.createElement('div');
+  back.style.cssText = 'margin:12px 12px 4px;';
+  back.innerHTML = '<button class="player-back" style="background:rgba(255,255,255,0.15);color:white;border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;" onclick="closeCategory()">← Categories</button><div style="font-family:Fredoka One,cursive;font-size:18px;color:white;margin-top:8px;padding-left:4px;">' + catLabels[cat] + '</div>';
+  phrasesList.appendChild(back);
+
+  // Add phrase cards
+  var list = document.createElement('div');
+  list.className = 'song-list';
+  list.id = 'phrase-cards';
   var items = phrases[cat];
   items.forEach(function(p) {
     var div = document.createElement('div');
     div.className = 'song-item';
     var isEng = window.learningLang === 'english';
-    var primaryText = isEng ? p.english : p.english;
+    var primaryText = p.english;
     var secondaryText = isEng ? p.khmer : p.phonetic;
     var badgeChar = isEng ? p.english.charAt(0) : p.khmer.charAt(0);
     div.innerHTML = '<div class="song-item-header"><div class="song-badge badge-kids" style="background:var(--yellow);font-size:14px;width:38px;height:38px;font-family:Khmer,sans-serif;">' + badgeChar + '</div><div><div class="song-info-title">' + primaryText + '</div><div class="song-info-sub">' + secondaryText + '</div></div><div class="song-arrow">▶</div></div>';
-    div.onclick = function() { openPhrase(p); };
+    div.onclick = (function(phrase) { return function() { openPhrase(phrase); }; })(p);
     list.appendChild(div);
   });
-  // Add back button at top
-  var back = document.createElement('div');
-  back.style = 'margin:12px 12px 4px;';
-  back.innerHTML = '<button class="player-back" style="background:rgba(255,255,255,0.15);color:white;border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;" onclick="closeCategory()">← Categories</button><div style="font-family:Fredoka One,cursive;font-size:18px;color:white;margin-top:8px;padding-left:4px;">' + catLabels[cat] + '</div>';
-  document.getElementById('phrases-list').insertBefore(back, list);
-  document.getElementById('phrases-list').style.display = 'block';
+  phrasesList.appendChild(list);
+  phrasesList.style.display = 'block';
 }
 
 function closeCategory() {
   document.getElementById('phrases-list').style.display = 'none';
+  document.getElementById('phrase-player').style.display = 'none';
   document.getElementById('phrases-categories').style.display = 'block';
-  // Clear back button to avoid duplicates
-  var list = document.getElementById('phrases-list');
-  while (list.firstChild) list.removeChild(list.firstChild);
-  list.appendChild(document.getElementById('phrase-cards'));
+  document.getElementById('phrase-cards').innerHTML = '';
+  currentCategory = null;
 }
 
 function openPhrase(p) {
