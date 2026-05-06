@@ -1321,6 +1321,74 @@ function closePhrasePlayer() {
 }
 
 
+function openKidsSongs() {
+  document.getElementById('phrases-categories').style.display = 'none';
+  document.getElementById('phrases-list').style.display = 'none';
+  document.getElementById('phrase-player').style.display = 'none';
+
+  var phrasesList = document.getElementById('phrases-list');
+  phrasesList.innerHTML = '';
+
+  var back = document.createElement('div');
+  back.style.cssText = 'margin:12px 12px 4px;';
+  back.innerHTML = '<button class="player-back" style="background:rgba(255,255,255,0.15);color:white;border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;" onclick="closeKidsSongsToCategories()">← Categories</button><div style="font-family:Fredoka One,cursive;font-size:18px;color:white;margin-top:8px;padding-left:4px;">👶 Kids Songs</div>';
+  phrasesList.appendChild(back);
+
+  var list = document.createElement('div');
+  list.className = 'song-list';
+  list.id = 'phrase-cards';
+
+  var kidsSongsList = [
+    { title: 'Twinkle Twinkle Little Star', sub: 'ពន្លឺផ្កាយតូច · Beginner', idx: 0 },
+    { title: "My Grandpa's Farm", sub: 'Khmer Old MacDonald · Beginner', idx: 1 }
+  ];
+
+  kidsSongsList.forEach(function(s) {
+    var div = document.createElement('div');
+    div.className = 'song-item';
+    div.innerHTML = '<div class="song-item-header"><div class="song-badge badge-kids" style="background:#4CAF50;font-size:18px;width:38px;height:38px;">' + (s.idx + 1) + '</div><div><div class="song-info-title">' + s.title + '</div><div class="song-info-sub">' + s.sub + '</div></div><div class="song-arrow">▶</div></div>';
+    div.onclick = (function(idx) { return function() { openKidsSong(idx); }; })(s.idx);
+    list.appendChild(div);
+  });
+
+  phrasesList.appendChild(list);
+  phrasesList.style.display = 'block';
+}
+
+function closeKidsSongsToCategories() {
+  document.getElementById('phrases-list').style.display = 'none';
+  document.getElementById('phrases-list').innerHTML = '<div class="song-list" id="phrase-cards"></div>';
+  document.getElementById('phrases-categories').style.display = 'block';
+}
+
+function openKidsSong(idx) {
+  document.getElementById('phrases-list').style.display = 'none';
+  document.getElementById('panel-kids').style.display = 'block';
+  document.getElementById('panel-kids').classList.add('visible');
+  var existing = document.getElementById('kids-back-btn');
+  if (existing) existing.remove();
+  var back = document.createElement('div');
+  back.id = 'kids-back-btn';
+  back.style.cssText = 'margin:12px 12px 4px;';
+  back.innerHTML = '<button class="player-back" style="background:rgba(255,255,255,0.15);color:white;border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;" onclick="backToKidsSongsList()">← Kids Songs</button>';
+  document.getElementById('panel-kids').insertBefore(back, document.getElementById('panel-kids').firstChild);
+  openPlayer('kids', idx);
+}
+
+function backToKidsSongsList() {
+  var backBtn = document.getElementById('kids-back-btn');
+  if (backBtn) backBtn.remove();
+  if (kidsPlayer) kidsPlayer.pauseVideo();
+  clearInterval(state['kids'].timer);
+  state['kids'].playing = false;
+  state['kids'].current = -1;
+  document.getElementById('panel-kids').classList.remove('visible');
+  document.getElementById('panel-kids').style.display = 'none';
+  document.getElementById('kids-player').classList.remove('visible');
+  document.getElementById('kids-list').style.display = 'flex';
+  openKidsSongs();
+}
+
 // ===== QUIZ =====
 var quizSelectedCat = 'all';
 var quizQuestions = [];
