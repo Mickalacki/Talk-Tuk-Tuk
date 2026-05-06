@@ -162,11 +162,20 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
 .quiz-cat-btn:active { transform: scale(0.97); }
 .quiz-cat-btn.selected { border-color: var(--blue); background: #E3F2FD; color: var(--blue); }
 .btn-quiz-start { background: var(--pink); color: white; border: none; border-radius: 30px; padding: 14px 32px; font-family: "Fredoka One", cursive; font-size: 20px; cursor: pointer; margin-top: 20px; width: 100%; }
+.loading-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--dark); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+.loading-spinner { width: 48px; height: 48px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--yellow); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { color: white; font-family: "Fredoka One", cursive; font-size: 18px; }
 .footer { text-align: center; margin-top: 28px; font-size: 11px; color: rgba(255,255,255,0.3); }
 </style>
 <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
+<div id="loading-screen" class="loading-screen">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading Talk Tuk Tuk...</div>
+</div>
+
 <div id="lang-overlay" class="lang-overlay">
   <div class="lang-box">
     <div style="text-align:center;margin-bottom:12px;">
@@ -1170,7 +1179,8 @@ function onYouTubeIframeAPIReady() {
 }
 
 
-var phrases = {
+var phrases = {}; // loaded dynamically
+var phrases_static = {
   greetings: [
     { id:"PHR-GRT-001", english:"Hello", khmer:"សួស្តី", phonetic:"Soo-sday" },
     { id:"PHR-GRT-002", english:"Goodbye", khmer:"លាហើយ", phonetic:"Lea hay" },
@@ -1388,6 +1398,79 @@ function backToKidsSongsList() {
   document.getElementById('kids-list').style.display = 'flex';
   openKidsSongs();
 }
+
+var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRlsrM4L03wTQfXLn52vscG9_S5Iia-3a3EVjBudEyu3NymiNXd_4rigjv5yXkGegSYIaKFUwU62eUG/pub?output=csv';
+var baseMediaURL = 'https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/';
+
+function parseCSV(csv) {
+  var lines = csv.trim().split('\n');
+  var headers = lines[0].split(',').map(function(h) { return h.trim().replace(/^"|"$/g, ''); });
+  var rows = [];
+  for (var i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    // Handle quoted fields with commas inside
+    var fields = [];
+    var current = '';
+    var inQuotes = false;
+    for (var c = 0; c < lines[i].length; c++) {
+      var ch = lines[i][c];
+      if (ch === '"') { inQuotes = !inQuotes; }
+      else if (ch === ',' && !inQuotes) { fields.push(current.trim()); current = ''; }
+      else { current += ch; }
+    }
+    fields.push(current.trim());
+    var row = {};
+    headers.forEach(function(h, idx) { row[h] = (fields[idx] || '').replace(/^"|"$/g, '').trim(); });
+    rows.push(row);
+  }
+  return rows;
+}
+
+function buildPhrasesFromCSV(rows) {
+  var built = {};
+  var catMap = {
+    'Greetings': 'greetings', 'Food & Drink': 'food', 'Getting Around': 'transport',
+    'Social': 'social', 'Numbers': 'numbers', 'Days': 'days', 'Colours': 'colours'
+  };
+  rows.forEach(function(row) {
+    if (!row.PhraseID || !row.English) return;
+    var cat = catMap[row.Category] || row.Category;
+    if (!cat) return;
+    if (!built[cat]) built[cat] = [];
+    built[cat].push({
+      id: row.PhraseID,
+      english: row.English,
+      khmer: row.Khmer || '',
+      phonetic: row.KhmerPhonetic || ''
+    });
+  });
+  return built;
+}
+
+function loadPhrases() {
+  fetch(CSV_URL)
+    .then(function(r) { return r.text(); })
+    .then(function(csv) {
+      var rows = parseCSV(csv);
+      phrases = buildPhrasesFromCSV(rows);
+      console.log('Loaded ' + rows.length + ' phrases from Google Sheets');
+      initApp();
+    })
+    .catch(function(err) {
+      console.warn('CSV load failed, using built-in data:', err);
+      phrases = phrases_static;
+      initApp();
+    });
+}
+
+function initApp() {
+  document.getElementById('loading-screen').style.display = 'none';
+  // Show lang overlay if first visit, otherwise show main app
+  document.getElementById('lang-overlay').style.display = 'flex';
+}
+
+// Start loading
+loadPhrases();
 
 // ===== QUIZ =====
 var quizSelectedCat = 'all';
