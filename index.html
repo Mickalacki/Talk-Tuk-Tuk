@@ -1402,25 +1402,36 @@ function backToKidsSongsList() {
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRlsrM4L03wTQfXLn52vscG9_S5Iia-3a3EVjBudEyu3NymiNXd_4rigjv5yXkGegSYIaKFUwU62eUG/pub?output=csv';
 var baseMediaURL = 'https://raw.githubusercontent.com/Mickalacki/talktuktuk/main/';
 
+function parseCSVLine(line) {
+  var fields = [];
+  var current = '';
+  var inQuotes = false;
+  for (var c = 0; c < line.length; c++) {
+    var ch = line[c];
+    if (ch === '"') {
+      inQuotes = !inQuotes;
+    } else if (ch === ',' && !inQuotes) {
+      fields.push(current.replace(/^"|"$/g, '').trim());
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+  fields.push(current.replace(/^"|"$/g, '').trim());
+  return fields;
+}
+
 function parseCSV(csv) {
   var lines = csv.trim().split('\n');
-  var headers = lines[0].split(',').map(function(h) { return h.trim().replace(/^"|"$/g, ''); });
+  var headers = parseCSVLine(lines[0]);
   var rows = [];
   for (var i = 1; i < lines.length; i++) {
     if (!lines[i].trim()) continue;
-    // Handle quoted fields with commas inside
-    var fields = [];
-    var current = '';
-    var inQuotes = false;
-    for (var c = 0; c < lines[i].length; c++) {
-      var ch = lines[i][c];
-      if (ch === '"') { inQuotes = !inQuotes; }
-      else if (ch === ',' && !inQuotes) { fields.push(current.trim()); current = ''; }
-      else { current += ch; }
-    }
-    fields.push(current.trim());
+    var fields = parseCSVLine(lines[i]);
     var row = {};
-    headers.forEach(function(h, idx) { row[h] = (fields[idx] || '').replace(/^"|"$/g, '').trim(); });
+    headers.forEach(function(h, idx) {
+      row[h] = (fields[idx] || '').trim();
+    });
     rows.push(row);
   }
   return rows;
@@ -1428,20 +1439,27 @@ function parseCSV(csv) {
 
 function buildPhrasesFromCSV(rows) {
   var built = {};
+  // Map all possible category names from the sheet
   var catMap = {
-    'Greetings': 'greetings', 'Food & Drink': 'food', 'Getting Around': 'transport',
-    'Social': 'social', 'Numbers': 'numbers', 'Days': 'days', 'Colours': 'colours'
+    'Greetings': 'greetings', 'greetings': 'greetings',
+    'Food & Drink': 'food', 'Food': 'food', 'food': 'food',
+    'Getting Around': 'transport', 'Transport': 'transport', 'transport': 'transport',
+    'Social': 'social', 'social': 'social',
+    'Numbers': 'numbers', 'numbers': 'numbers',
+    'Days': 'days', 'days': 'days',
+    'Colours': 'colours', 'Colors': 'colours', 'colours': 'colours'
   };
   rows.forEach(function(row) {
     if (!row.PhraseID || !row.English) return;
-    var cat = catMap[row.Category] || row.Category;
+    var rawCat = (row.Category || '').trim();
+    var cat = catMap[rawCat];
     if (!cat) return;
     if (!built[cat]) built[cat] = [];
     built[cat].push({
-      id: row.PhraseID,
-      english: row.English,
-      khmer: row.Khmer || '',
-      phonetic: row.KhmerPhonetic || ''
+      id: row.PhraseID.trim(),
+      english: row.English.trim(),
+      khmer: (row.Khmer || '').trim(),
+      phonetic: (row.KhmerPhonetic || '').trim()
     });
   });
   return built;
