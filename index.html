@@ -315,7 +315,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
             <div class="song-badge badge-kids" style="background:#FFD600;font-size:22px;width:44px;height:44px;">👋</div>
             <div>
               <div class="song-info-title">Greetings</div><div style="font-size:11px;color:#888;margin-top:1px;">ការស្វាគមន៍</div>
-              <div class="song-info-sub">7 phrases · Hello, Thank you, Sorry...</div>
+              <div class="song-info-sub"><span id="cat-sub-greetings">7 phrases · Hello, Thank you, Sorry...</span></div>
             </div>
             <div class="song-arrow">▶</div>
           </div>
@@ -325,7 +325,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
             <div class="song-badge badge-kids" style="background:#FF8F00;font-size:22px;width:44px;height:44px;">🍜</div>
             <div>
               <div class="song-info-title">Food &amp; Drink</div><div style="font-size:11px;color:#888;margin-top:1px;">ម្ហូប និងភេសជ្ជៈ</div>
-              <div class="song-info-sub">9 phrases · Water, Beer, Delicious...</div>
+              <div class="song-info-sub"><span id="cat-sub-food">9 phrases · Water, Beer, Delicious...</span></div>
             </div>
             <div class="song-arrow">▶</div>
           </div>
@@ -335,7 +335,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
             <div class="song-badge badge-kids" style="background:#1565C0;font-size:22px;width:44px;height:44px;">🛺</div>
             <div>
               <div class="song-info-title">Getting Around</div><div style="font-size:11px;color:#888;margin-top:1px;">ការធ្វើដំណើរ</div>
-              <div class="song-info-sub">6 phrases · Turn left, Stop here...</div>
+              <div class="song-info-sub"><span id="cat-sub-transport">6 phrases · Turn left, Stop here...</span></div>
             </div>
             <div class="song-arrow">▶</div>
           </div>
@@ -345,7 +345,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
             <div class="song-badge badge-kids" style="background:#2E7D32;font-size:22px;width:44px;height:44px;">🤝</div>
             <div>
               <div class="song-info-title">Social</div><div style="font-size:11px;color:#888;margin-top:1px;">សង្គម</div>
-              <div class="song-info-sub">5 phrases · What is your name...</div>
+              <div class="song-info-sub"><span id="cat-sub-social">5 phrases · What is your name...</span></div>
             </div>
             <div class="song-arrow">▶</div>
           </div>
@@ -355,7 +355,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
             <div class="song-badge badge-kids" style="background:#6A1B9A;font-size:22px;width:44px;height:44px;">🔢</div>
             <div>
               <div class="song-info-title">Numbers</div><div style="font-size:11px;color:#888;margin-top:1px;">លេខ</div>
-              <div class="song-info-sub">10 phrases · 1 through 10</div>
+              <div class="song-info-sub"><span id="cat-sub-numbers">10 phrases · 1 through 10</span></div>
             </div>
             <div class="song-arrow">▶</div>
           </div>
@@ -365,7 +365,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
             <div class="song-badge badge-kids" style="background:#00838F;font-size:22px;width:44px;height:44px;">📅</div>
             <div>
               <div class="song-info-title">Days</div><div style="font-size:11px;color:#888;margin-top:1px;">ថ្ងៃក្នុងសប្តាហ៍</div>
-              <div class="song-info-sub">8 phrases · Monday to Sunday</div>
+              <div class="song-info-sub"><span id="cat-sub-days">8 phrases · Monday to Sunday</span></div>
             </div>
             <div class="song-arrow">▶</div>
           </div>
@@ -375,7 +375,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
             <div class="song-badge badge-kids" style="background:#AD1457;font-size:22px;width:44px;height:44px;">🎨</div>
             <div>
               <div class="song-info-title">Colours</div><div style="font-size:11px;color:#888;margin-top:1px;">ពណ៌</div>
-              <div class="song-info-sub">8 phrases · Red, Blue, Green...</div>
+              <div class="song-info-sub"><span id="cat-sub-colours">8 phrases · Red, Blue, Green...</span></div>
             </div>
             <div class="song-arrow">▶</div>
           </div>
@@ -1483,8 +1483,26 @@ function loadPhrases() {
 
 function initApp() {
   document.getElementById('loading-screen').style.display = 'none';
-  // Show lang overlay if first visit, otherwise show main app
+  updateCategoryCounts();
   document.getElementById('lang-overlay').style.display = 'flex';
+}
+
+function updateCategoryCounts() {
+  var catInfo = {
+    greetings: { el: 'cat-sub-greetings', preview: function(p) { return p.slice(0,2).map(function(x){return x.english;}).join(', ') + '...'; } },
+    food:      { el: 'cat-sub-food',      preview: function(p) { return p.slice(0,3).map(function(x){return x.english;}).join(', ') + '...'; } },
+    transport: { el: 'cat-sub-transport', preview: function(p) { return p.slice(0,2).map(function(x){return x.english;}).join(', ') + '...'; } },
+    social:    { el: 'cat-sub-social',    preview: function(p) { return p.slice(0,2).map(function(x){return x.english;}).join(', ') + '...'; } },
+    numbers:   { el: 'cat-sub-numbers',   preview: function(p) { return p.length + ' numbers'; } },
+    days:      { el: 'cat-sub-days',      preview: function(p) { return p.slice(0,2).map(function(x){return x.english;}).join(', ') + '...'; } },
+    colours:   { el: 'cat-sub-colours',   preview: function(p) { return p.slice(0,3).map(function(x){return x.english;}).join(', ') + '...'; } }
+  };
+  Object.keys(catInfo).forEach(function(cat) {
+    var el = document.getElementById(catInfo[cat].el);
+    if (!el || !phrases[cat]) return;
+    var count = phrases[cat].length;
+    el.textContent = count + ' phrases · ' + catInfo[cat].preview(phrases[cat]);
+  });
 }
 
 // Start loading
