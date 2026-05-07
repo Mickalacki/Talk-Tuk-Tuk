@@ -199,13 +199,13 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
   </div>
 
   <div class="charity-banner">
-    20% of profits support Cambodian charities &mdash;
+    20% of app profits support Cambodian charities &mdash;
     <a href="#" onclick="showMain('about'); return false;">Find out more</a>
   </div>
 
   <div class="donate-wrap">
     <a class="btn-donate" href="PAYPAL_LINK_HERE" target="_blank">❤️ Donate</a>
-    <div class="donate-note">20% of all donations go directly to Cambodian charities</div>
+    <div class="donate-note">100% of donations go directly to Cambodian charities</div>
   </div>
 
   <div class="lang-badge" onclick="document.getElementById('lang-overlay').style.display='flex'">
@@ -484,7 +484,7 @@ html, body { font-family: 'Nunito', sans-serif; background: var(--dark); min-hei
       <p class="about-text">No boring lessons. No textbooks. Just pick a category, watch a short clip, and start talking. Whether you're haggling at the market, ordering food, or just want to make your tuk tuk driver smile — Talk Tuk Tuk has you covered.</p>
       <div class="giving-badge">
         <span class="pct">20%</span>
-        of every purchase goes directly to Cambodian charities
+        of app profits go directly to Cambodian charities
       </div>
       <div class="donate-wrap" style="margin: 0 0 18px;">
         <a class="btn-donate" href="PAYPAL_LINK_HERE" target="_blank">❤️ Donate Now</a>
@@ -1466,24 +1466,59 @@ function buildPhrasesFromCSV(rows) {
 }
 
 function loadPhrases() {
+  // Try direct fetch first
   fetch(CSV_URL)
-    .then(function(r) { return r.text(); })
+    .then(function(r) {
+      if (!r.ok) throw new Error('Status ' + r.status);
+      return r.text();
+    })
     .then(function(csv) {
       var rows = parseCSV(csv);
-      phrases = buildPhrasesFromCSV(rows);
-      console.log('Loaded ' + rows.length + ' phrases from Google Sheets');
-      initApp();
+      var loaded = buildPhrasesFromCSV(rows);
+      // Only use if we got actual data
+      if (Object.keys(loaded).length > 0) {
+        phrases = loaded;
+        var total = Object.values(loaded).reduce(function(a,b){return a+b.length;},0);
+        console.log('Loaded ' + total + ' phrases from Google Sheets');
+        initApp('Google Sheets live (' + total + ' phrases)');
+      } else {
+        throw new Error('No phrases parsed');
+      }
     })
     .catch(function(err) {
-      console.warn('CSV load failed, using built-in data:', err);
-      phrases = phrases_static;
-      initApp();
+      console.warn('CSV load failed:', err.message);
+      // Try CORS proxy as fallback
+      var proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(CSV_URL);
+      fetch(proxyUrl)
+        .then(function(r) { return r.text(); })
+        .then(function(csv) {
+          var rows = parseCSV(csv);
+          var loaded = buildPhrasesFromCSV(rows);
+          if (Object.keys(loaded).length > 0) {
+            phrases = loaded;
+            var total = Object.values(loaded).reduce(function(a,b){return a+b.length;},0);
+            console.log('Loaded via proxy: ' + total + ' phrases');
+            initApp('Google Sheets via proxy (' + total + ' phrases)');
+          } else {
+            throw new Error('Proxy also failed');
+          }
+        })
+        .catch(function(err2) {
+          console.warn('Proxy also failed, using built-in:', err2.message);
+          phrases = phrases_static;
+          initApp('Built-in data (offline)');
+        });
     });
 }
 
-function initApp() {
+function initApp(source) {
   document.getElementById('loading-screen').style.display = 'none';
   updateCategoryCounts();
+  // Show data source in footer for debugging
+  var footer = document.querySelector('.footer');
+  if (footer && source) {
+    footer.innerHTML += '<br><span style="font-size:9px;opacity:0.4;">Data: ' + source + '</span>';
+  }
   document.getElementById('lang-overlay').style.display = 'flex';
 }
 
